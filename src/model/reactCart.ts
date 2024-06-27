@@ -1,12 +1,12 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ICartProduct {
-  imageSrc: string;
-  productName: string;
-  productDescription: string;
-  productPrice: number;
+  id: string;
+  name: string;
+  price: number;
   quantity: number;
-  _id: string;
+  image: string;
+  userId:string|null
 }
 
 export interface IReactCart extends Document {
@@ -15,12 +15,12 @@ export interface IReactCart extends Document {
 }
 
 const reactCartProductSchema: Schema = new Schema({
-  imageSrc: { type: String, required: true },
-  productName: { type: String, required: true },
-  productDescription: { type: String, required: true },
-  productPrice: { type: Number, required: true },
+  image: { type: String, required: true },
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
   quantity: { type: Number, required: true },
-  _id: { type: String, required: true }
+  id: { type: String, required: true },
+  userId:{type:String , require:false}
 });
 
 const reactCartSchema: Schema = new Schema({

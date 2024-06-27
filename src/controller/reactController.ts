@@ -8,7 +8,7 @@ export const getReactCartItems = async (req: Request, res: Response) => {
   try {
     const cart = await ReactCart.findOne({ user_id: userId });
     if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
+      return res.status(401).json({message:'not found'});
     }
     res.json(cart.cartItems);
   } catch (error) {
@@ -21,15 +21,16 @@ export const getReactCartItems = async (req: Request, res: Response) => {
 export const addOrUpdateReactCartItems = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const { cartItems } = req.body;
+  console.log(userId, cartItems);
 
   try {
     // Delete existing cart items for the user
     await ReactCart.findOneAndDelete({ user_id: userId });
-
+    
     // Create a new cart with the updated items
     const newCart: IReactCart = await ReactCart.create({
       user_id: userId,
-      cartItems
+      cartItems,
     });
 
     res.status(201).json(newCart);
@@ -38,3 +39,4 @@ export const addOrUpdateReactCartItems = async (req: Request, res: Response) => 
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+

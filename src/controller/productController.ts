@@ -12,6 +12,35 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
   }
 };
 
+
+export const getProductBynumber = async(req:Request,res:Response)=>{
+  try {
+      const {page} = req.params
+      const limit = 8;
+      const offset = (Number(page) - 1) * limit;
+
+    const products = await Product.find().skip(offset).limit(limit);
+    const totalProducts = await Product.countDocuments();
+    console.log(products)
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    res.status(200).json({
+      data: products,
+      meta: {
+        totalItems: totalProducts,
+        totalPages: totalPages,
+        currentPage: page,
+        itemsPerPage: limit,
+      },
+    });
+
+
+
+  } catch (error) {
+    console.log("error while fetching",error)
+  }
+}
+
 // Get product by ID
 export const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {

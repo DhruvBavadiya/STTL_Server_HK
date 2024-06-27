@@ -23,9 +23,6 @@ connectUserDB();
 // User router
 app.use(router);
 app.use(productrouter);
-app.get('/reactcart/:userId', getReactCartItems);
-app.post('/reactcart/:userId', addOrUpdateReactCartItems);
-
 // Specify port
 const port = 8000;
 
